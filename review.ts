@@ -56,5 +56,10 @@
 
 // 获取数组的值
 // type GetFirst<T> = T extends [infer First,...any] ? First : undefined
-type GetFirst<T> = T extends [infer First,...infer Reset] ? Reset: undefined
-type a = GetFirst<[1,3,5]>
+// type GetFirst<T> = T extends [infer First,...infer Reset] ? Reset: undefined
+// type a = GetFirst<[1,3,5]>
+
+// 使用infer类型赋值
+
+type Copy<T> = T extends infer P ? P : any
+type a = Copy<{ name: string }>
