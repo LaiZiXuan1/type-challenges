@@ -42,10 +42,8 @@
 // type isArray<T> = T extends any[]? true :false
 // type a  = isArray<[1]>
 
-
 // type GetProp<Object,Key> = Key extends keyof Object ? Object[Key] : undefined
 // type a = GetProp<{a:1},'a'>
-
 
 /**
  * 解构赋值 使用infer收集
@@ -56,10 +54,42 @@
 
 // 获取数组的值
 // type GetFirst<T> = T extends [infer First,...any] ? First : undefined
-// type GetFirst<T> = T extends [infer First,...infer Reset] ? Reset: undefined
+// type GetFirst<T> = T extends [infer First,...infer Rest] ? Rest: undefined
 // type a = GetFirst<[1,3,5]>
 
 // 使用infer类型赋值
 
-type Copy<T> = T extends infer P ? P : any
-type a = Copy<{ name: string }>
+// type Copy<T> = T extends infer P ? P : any
+// type a = Copy<{ name: string }>
+
+/*
+ * 循环遍历类型
+ * ts实现主要是使用extends关键字
+ * */
+
+// 实现Map循环
+// type MAP<List> = List extends [infer First, ...infer Rest] ? [{name:First},...MAP<Rest>] : []
+// type a = MAP<['张三','李四']>
+
+// 实现filter过滤
+
+// type FilterNumber<List> = List extends [infer First, ...infer Rest]
+//   ? First extends number
+//     ? [First, ...FilterNumber<Rest>]
+//     : FilterNumber<Rest>
+//   : [];
+// type a = FilterNumber<[1, "2"]>;
+
+/*
+* 实现take，三个参数1、被处理的数组，第二个为下标，第三个为处理后的数组
+* */
+type Take<Tuple, N, Output extends any[] = []> = Tuple extends [
+  infer First,
+  ...infer Rest
+]
+  ? Output["length"] extends N
+    ? Output
+    : Take<Rest, N, [...Output,First]>
+  : Output;
+
+type a = Take<[1, 2, 3, 4], 2>;
