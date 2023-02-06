@@ -1,5 +1,7 @@
 /* _____________ Your Code Here _____________
+* as const 类型断言把 string[]类型 转为了 readonly 的 元组类型
 * T[number]拿出元组或者组合类型所有值
+* 遍历元组字面量的特定语法
 * */
 
 type TupleToObject<T extends readonly any[]> = {
