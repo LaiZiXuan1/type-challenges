@@ -4,7 +4,7 @@
   1. 限制 K 的值，并赋默认值,
   2. 把传来的类型的 key全部转为readonly 使用 & 符进行联合，
   3. 结合上一题 Omit过滤传来的 联合类型
-
+  没完全懂
 */
 
 type MyReadonly2<T, K extends keyof T = keyof T> = {
