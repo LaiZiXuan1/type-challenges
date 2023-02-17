@@ -1,17 +1,14 @@
+/* _____________ Your Code Here _____________
+  使用infer收集他的参数，T是一个函数就返回他的参数，否则就返回undefined
+*/
 
-// /* _____________ Your Code Here _____________ */
+type MyParameters<T> = T extends (...Params: infer P) => any ? P : undefined;
 
-// type MyParameters<T extends (...args: any[]) => any> = any
+/* _____________ Test Cases _____________ */
+import type { Equal, Expect } from '../utils';
 
-// /* _____________ Test Cases _____________ */
-// import type { Equal, Expect } from '../utils'
+const foo = (arg1: string, arg2: number): void => {};
+const bar = (arg1: boolean, arg2: { a: 'A' }): void => {};
+const baz = (): void => {};
 
-// const foo = (arg1: string, arg2: number): void => {}
-// const bar = (arg1: boolean, arg2: { a: 'A' }): void => {}
-// const baz = (): void => {}
-
-// type cases = [
-//   Expect<Equal<MyParameters<typeof foo>, [string, number]>>,
-//   Expect<Equal<MyParameters<typeof bar>, [boolean, { a: 'A' }]>>,
-//   Expect<Equal<MyParameters<typeof baz>, []>>,
-// ]
+type cases = [Expect<Equal<MyParameters<typeof foo>, [string, number]>>, Expect<Equal<MyParameters<typeof bar>, [boolean, { a: 'A' }]>>, Expect<Equal<MyParameters<typeof baz>, []>>];
